@@ -5,6 +5,9 @@
  */
 package main;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -106,7 +109,14 @@ public class Main extends Application {
     }
 
     private void process(String inputPath, String outPath) {
-        System.out.print("Processing ...");
+        try{
+            System.out.print("Processing ...");
+        Files.copy(Paths.get(inputPath), Paths.get(outPath), StandardCopyOption.REPLACE_EXISTING);
+        System.out.println("Done");
+        }catch(Exception e){
+            System.out.println("Something went wrong: " +e);
+        }
+        
     }
 
 }
