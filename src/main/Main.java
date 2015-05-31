@@ -43,7 +43,7 @@ public class Main extends Application {
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
 
-        Scene scene = new Scene(grid, 600, 600);
+        Scene scene = new Scene(grid, 500, 500);
         FileChooser fileChooser = new FileChooser();
         Text scenetitle = new Text("Welcome");
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
