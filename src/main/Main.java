@@ -32,6 +32,8 @@ import javafx.stage.Stage;
  */
 public class Main extends Application {
 
+    private final Text actiontarget = new Text();
+
     @Override
     public void start(Stage primaryStage) {
 
@@ -53,7 +55,7 @@ public class Main extends Application {
         TextField userTextField = new TextField();
         grid.add(userTextField, 1, 1);
 
-        Button fileBtn = new Button("Select input file");
+        Button fileBtn = new Button("Select");
         grid.add(fileBtn, 2, 1);
         fileBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -62,13 +64,13 @@ public class Main extends Application {
             }
         });
 
-        Label pw = new Label("Output Location:");
+        Label pw = new Label("Output File:");
         grid.add(pw, 0, 2);
 
         TextField outLocation = new TextField();
         grid.add(outLocation, 1, 2);
 
-        Button outBtn = new Button("Select output path");
+        Button outBtn = new Button("Select");
         grid.add(outBtn, 2, 2);
 
         outBtn.setOnAction(new EventHandler<ActionEvent>() {
@@ -83,16 +85,15 @@ public class Main extends Application {
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbBtn.getChildren().add(btn);
         grid.add(hbBtn, 1, 4);
-
-        final Text actiontarget = new Text();
+        
+        actiontarget.setFill(Color.FIREBRICK);
         grid.add(actiontarget, 1, 6);
 
         btn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(final ActionEvent e) {
                 process(userTextField.getText(), outLocation.getText());
-                actiontarget.setFill(Color.FIREBRICK);
-                actiontarget.setText("Done !");
+                setStatus("Done !");
             }
         });
 
@@ -109,14 +110,17 @@ public class Main extends Application {
     }
 
     private void process(String inputPath, String outPath) {
-        try{
-            System.out.print("Processing ...");
-        Files.copy(Paths.get(inputPath), Paths.get(outPath), StandardCopyOption.REPLACE_EXISTING);
-        System.out.println("Done");
-        }catch(Exception e){
-            System.out.println("Something went wrong: " +e);
+        try {
+            setStatus("Processing ...");
+            Files.copy(Paths.get(inputPath), Paths.get(outPath), StandardCopyOption.REPLACE_EXISTING);
+            setStatus("Done");
+        } catch (Exception e) {
+            setStatus("Something went wrong: " + e);
         }
-        
+
     }
 
+    private void setStatus(String status) {
+        actiontarget.setText(status);
+    }
 }
